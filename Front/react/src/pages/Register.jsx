@@ -40,26 +40,8 @@ export default function Register() {
 
         if (registerForm.password === registerForm.password2) {
             var data = await Fetch({ action: "auth/users/", method: HttpMethod.POST, body: registerForm, token: "" })
-
-            var new_errors = []
-            if (data.username) {
-                for (let i = 0; i < data.username.length; i++) {
-                    new_errors.push("Error: " + data.username[i])
-                }
-            }
-            if (data.password) {
-                for (let i = 0; i < data.password.length; i++) {
-                    new_errors.push("Error: " + data.password[i])
-                }
-            }
-            if (new_errors.length > 0) {
-                setErrors((prev) => new_errors)
-            }
-
-            if (typeof data.username === "string") {
-                setUser(data)
-                navigate("/login/")
-            }
+            setUser(data)
+            navigate("/login/")
         } else {
             setErrors(['Error: passwords must be equal'])
         }
@@ -82,7 +64,7 @@ export default function Register() {
     return (
         <div className="Register">
             <div className="LoginForm">
-                <h2>Welcome to phils_network!</h2>
+                <h2>Welcome to hw_auth!</h2>
 
                 {showErrors}
 

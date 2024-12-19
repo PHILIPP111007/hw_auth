@@ -4,3 +4,7 @@ export var HttpMethod = {
     PUT: "PUT",
     DELETE: "DELETE"
 }
+
+export var CacheKeys = {
+    TOKEN: "token",
+}

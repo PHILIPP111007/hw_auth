@@ -22,12 +22,7 @@ export default function Login() {
             setUser({ ...user, ...data })
             setIsAuth(true)
 
-            var path = localStorage.getItem(CacheKeys.REMEMBER_PAGE)
-            if (path !== null) {
-                path = `/${path}/${data.username}/`
-            } else {
-                path = `/users/${data.username}/`
-            }
+            var path = `/users/${data.username}/`
             navigate(path)
         }
     }
@@ -50,7 +45,7 @@ export default function Login() {
     return (
         <div className="Login">
             <div className="LoginForm">
-                <h2>Welcome to phils_network!</h2>
+                <h2>Welcome to hw_auth!</h2>
                 <form id="LoginForm" onSubmit={e => login(e)}>
                     <Input
                         value={loginForm.username}
