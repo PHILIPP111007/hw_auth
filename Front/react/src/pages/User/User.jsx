@@ -19,7 +19,6 @@ export default function User() {
             <MainComponents />
 
             <div className="UserCard">
-                <h3>{userLocal.first_name} {userLocal.last_name}</h3>
                 <div>@{userLocal.username}</div>
             </div>
         </div>

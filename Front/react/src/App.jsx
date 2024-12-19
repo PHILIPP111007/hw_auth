@@ -17,8 +17,6 @@ export default function App() {
     var [user, setUser] = useState({
         pk: 0,
         username: "",
-        first_name: "",
-        last_name: ""
     })
 
     useAuth({ username: user.username, setIsAuth: setIsAuth })
