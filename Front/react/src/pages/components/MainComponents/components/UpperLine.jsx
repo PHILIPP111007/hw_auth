@@ -25,12 +25,6 @@ export default function UpperLine(props) {
                 }
             </div>
 
-            {(props.roomName && !props.loading) &&
-                <div>
-                    {props.roomName}
-                </div>
-            }
-
             {props.loading && <Loading />}
 
             <img src={menuLogo} onClick={() => showHideBar(props.setBarRef)} alt="menu logo" />

@@ -17,7 +17,6 @@ export default function App() {
     var [user, setUser] = useState({
         pk: 0,
         username: "",
-        email: "",
         first_name: "",
         last_name: ""
     })
