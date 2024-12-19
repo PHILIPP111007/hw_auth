@@ -5,17 +5,13 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { AuthContext, UserContext } from "@data/context"
 import { PrivateRoutes, PublicRoutes } from "@data/routes"
 import { useAuth } from "@hooks/useAuth"
-import useTheme from "@hooks/useTheme"
 import SuspenseLoading from "@pages/components/SuspenseLoading"
 import ErrorPage from "@pages/ErrorPage/ErrorPage"
 
 export default function App() {
 
-    useTheme()
-
     var [isAuth, setIsAuth] = useState(false)
     var [user, setUser] = useState({
-        pk: 0,
         username: "",
     })
 

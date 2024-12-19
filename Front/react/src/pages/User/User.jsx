@@ -10,16 +10,15 @@ export default function User() {
 
     var { user, setUser } = useContext(UserContext)
     var params = useParams()
-    var [userLocal, setUserLocal] = useState(user)
 
-    useSetUser({ username: params.username, setUser: setUser, setUserLocal: setUserLocal })
+    useSetUser({ username: params.username, setUser: setUser })
 
     return (
         <div className="User">
             <MainComponents />
 
             <div className="UserCard">
-                <div>@{userLocal.username}</div>
+                <div>@{user.username}</div>
             </div>
         </div>
     )

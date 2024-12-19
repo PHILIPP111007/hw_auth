@@ -19,8 +19,8 @@ export default function UpperLine(props) {
     return (
         <div className="UpperLine">
             <div>
-                {user.first_name
-                    ? user.first_name
+                {user.username
+                    ? user.username
                     : "No name"
                 }
             </div>

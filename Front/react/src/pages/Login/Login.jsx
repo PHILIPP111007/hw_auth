@@ -16,7 +16,7 @@ export default function Login() {
 
     async function auth() {
         var token = getToken()
-        var data = await Fetch({ action: "auth/users/me/", method: HttpMethod.GET, token: token })
+        var data = await Fetch({ action: "user/", method: HttpMethod.GET, token: token })
 
         if (data && !data.detail && data.username) {
             setUser({ ...user, ...data })
@@ -29,10 +29,10 @@ export default function Login() {
 
     async function login(event) {
         event.preventDefault()
-        var data = await Fetch({ action: "token/token/login/", method: HttpMethod.POST, body: loginForm, token: "" })
+        var data = await Fetch({ action: "token/", method: HttpMethod.POST, body: loginForm, token: "" })
 
-        if (data && !data.detail && data.auth_token) {
-            localStorage.setItem(CacheKeys.TOKEN, data.auth_token)
+        if (data && data.token) {
+            localStorage.setItem(CacheKeys.TOKEN, data.token)
             setIsAuth(true)
             auth()
         }

@@ -10,17 +10,17 @@ from typing import Optional
 import uvicorn
 
 # Constants
-DATABASE_URL = "postgresql://user:password@localhost/dbname"
-SECRET_KEY = "secret_key"
+DATABASE_URL = "postgresql://postgres:postgres@db:5432/postgres""
+SECRET_KEY = "123"
 ALGORITHM = "HS256"
 
 # Database setup
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
+session = SessionLocal()
 
 
-# User model
 class User(Base):
 	__tablename__ = "users"
 	id = Column(Integer, primary_key=True, index=True)
@@ -38,7 +38,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
-# Utility functions
 def verify_password(plain_password: str, hashed_password: str) -> bool:
 	return pwd_context.verify(plain_password, hashed_password)
 
@@ -54,21 +53,10 @@ def create_access_token(data: dict, expires_delta: Optional[int] = None) -> str:
 	return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 
-# Dependency
-def get_db():
-	db = SessionLocal()
-	try:
-		yield db
-	finally:
-		db.close()
-
-
-# Authentication route
-@app.post("/token")
-async def login(
-	form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
-):
-	user = db.query(User).filter(User.username == form_data.username).first()
+# Authentication
+@app.post("/api/v1/token")
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+	user = session.query(User).filter(User.username == form_data.username).first()
 	if not user or not verify_password(form_data.password, user.password):
 		raise HTTPException(status_code=400, detail="Incorrect username or password")
 
@@ -80,14 +68,20 @@ async def login(
 
 
 # Register a user
-@app.post("/register")
-async def register(username: str, password: str, db: Session = Depends(get_db)):
+@app.post("/api/v1/register")
+async def register(username: str, password: str):
 	hashed_password = get_password_hash(password)
 	db_user = User(username=username, password=hashed_password)
-	db.add(db_user)
-	db.commit()
-	db.refresh(db_user)
-	return {"msg": "User registered successfully"}
+	session.add(db_user)
+	session.commit()
+	session.refresh(db_user)
+	return {"username": username}
+
+
+@app.get("/api/v1/user")
+def get_user_by_username(username):
+    user = session.query(User).filter(User.username == username).first()
+    return {"username": user.username}
 
 
 if __name__ == "__main__":

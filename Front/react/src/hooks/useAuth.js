@@ -15,16 +15,11 @@ export function useAuth({ username, setIsAuth }) {
     return Func
 }
 
-export function useSetUser({ username, setUser, setUserLocal }) {
+export function useSetUser({ username, setUser }) {
     var Func = useEffect(() => {
         Fetch({ action: `user/${username}/`, method: HttpMethod.GET })
             .then((data) => {
-                if (data && data.global_user) {
-                    setUser(data.global_user)
-                    if (setUserLocal && data.local_user) {
-                        setUserLocal(data.local_user)
-                    }
-                }
+                setUser(data)
             })
     }, [username])
     return Func

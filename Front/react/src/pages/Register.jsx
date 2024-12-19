@@ -22,9 +22,9 @@ export default function Register() {
 
     async function auth() {
         var token = getToken()
-        var data = await Fetch({ action: "auth/users/me/", method: HttpMethod.GET, token: token })
+        var data = await Fetch({ action: "user/", method: HttpMethod.GET, token: token })
 
-        if (data && !data.detail && data.username) {
+        if (data && data.username) {
             setUser({ ...user, ...data })
             setIsAuth(true)
             navigate(`/users/${data.username}/`)
@@ -39,8 +39,8 @@ export default function Register() {
         event.preventDefault()
 
         if (registerForm.password === registerForm.password2) {
-            var data = await Fetch({ action: "auth/users/", method: HttpMethod.POST, body: registerForm, token: "" })
-            setUser(data)
+            var data = await Fetch({ action: "register/", method: HttpMethod.POST, body: registerForm, token: "" })
+            setUser(data.username)
             navigate("/login/")
         } else {
             setErrors(['Error: passwords must be equal'])
