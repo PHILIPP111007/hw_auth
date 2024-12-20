@@ -1,6 +1,5 @@
 import "./styles/User.css"
-import "../../styles/Posts.css"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { useParams } from "react-router-dom"
 import { UserContext } from "@data/context"
 import { useSetUser } from "@hooks/useAuth"
